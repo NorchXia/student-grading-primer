@@ -1,0 +1,25 @@
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: marksuser
+      POSTGRES_PASSWORD: markspass
+      POSTGRES_DB: marksdb
+    # Pre-seed script is required as a volume to load mock database
+    # Data inside the container is lost on restart unless you persist it with a volume.
+    ports:
+      - "5432:5432"
+
+  backend:
+    # TODO: you will need to add to this
+
+  frontend:
+    # TODO: you will need to add to this
+
+  automark:
+    build: ./automark
+    depends_on:
+      - backend
+      - db
+    profiles:
+      - debug
