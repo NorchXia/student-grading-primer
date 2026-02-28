@@ -11,3 +11,4 @@ It returns:
 }
 ## Reason
 Returning zero values instead of null ensures consistent API structure and simplifies frontend handling.
+
