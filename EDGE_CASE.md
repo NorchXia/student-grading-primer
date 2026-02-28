@@ -1,4 +1,13 @@
-# Document your edge case here
-- To get marks for this section you will need to explain to your tutor:
-1) The edge case you identified
-2) How you have accounted for this in your implementation
+# Edge Case
+
+## Case: No students in the database
+When there are no students stored in the database, the `/stats` endpoint still returns valid JSON.
+It returns:
+{
+  "count": 0,
+  "average": 0,
+  "min": 0,
+  "max": 0
+}
+## Reason
+Returning zero values instead of null ensures consistent API structure and simplifies frontend handling.
