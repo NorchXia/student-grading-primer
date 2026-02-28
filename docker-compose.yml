@@ -2,7 +2,7 @@ services:
   db:
     image: postgres:15
     environment:
-      POSTGRES_USER: markuser
+      POSTGRES_USER: marksuser
       POSTGRES_PASSWORD: markspass
       POSTGRES_DB: marksdb
 
@@ -21,7 +21,7 @@ services:
     environment:
       DB_HOST: db
       DB_NAME: marksdb
-      DB_USER: markuser
+      DB_USER: marksuser
       DB_PASSWORD: markspass
     ports:
       - "5000:5000"
