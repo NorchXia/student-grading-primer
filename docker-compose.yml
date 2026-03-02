@@ -43,6 +43,8 @@ services:
       - db
     profiles:
       - debug
+    working_dir: /check
+    entrypoint: ["bash", "-lc", "bash run_tests.sh"]
 
 volumes:
   db_data:
