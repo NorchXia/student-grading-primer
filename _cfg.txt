@@ -1,0 +1,68 @@
+name: student-grading-primer
+services:
+  backend:
+    build:
+      context: C:\Users\Administrator\github-classroom\unsw-cse-comp99-3900\student-grading-primer\backend
+      dockerfile: Dockerfile
+    depends_on:
+      db:
+        condition: service_started
+        required: true
+    environment:
+      DB_HOST: db
+      DB_NAME: marksdb
+      DB_PASSWORD: markspass
+      DB_USER: marksuser
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 5000
+        published: "5000"
+        protocol: tcp
+  db:
+    environment:
+      POSTGRES_DB: marksdb
+      POSTGRES_PASSWORD: markspass
+      POSTGRES_USER: marksuser
+    image: postgres:15
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 5432
+        published: "5432"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: C:\Users\Administrator\github-classroom\unsw-cse-comp99-3900\student-grading-primer\db\init.sql
+        target: /docker-entrypoint-initdb.d/init.sql
+        read_only: true
+        bind: {}
+      - type: volume
+        source: db_data
+        target: /var/lib/postgresql/data
+        volume: {}
+  frontend:
+    build:
+      context: C:\Users\Administrator\github-classroom\unsw-cse-comp99-3900\student-grading-primer\frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: http://localhost:5000
+    depends_on:
+      backend:
+        condition: service_started
+        required: true
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 80
+        published: "8080"
+        protocol: tcp
+networks:
+  default:
+    name: student-grading-primer_default
+volumes:
+  db_data:
+    name: student-grading-primer_db_data
